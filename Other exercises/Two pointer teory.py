@@ -9,7 +9,7 @@ def somma_11():
     grow = 0
     fall = len(nums) - 1
     
-    while grow <= fall:
+    while grow < fall:
         if nums[grow] + nums[fall] == 11:
             return True
         elif nums[grow] + nums[fall] > 11:
