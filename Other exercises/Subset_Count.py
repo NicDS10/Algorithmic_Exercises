@@ -5,40 +5,41 @@
 import sys
 
 def main():
-    input = list(map(int, sys.stdin.read().split()))
+    input_data = list(map(int, sys.stdin.read().split()))
     results = []
     i = 1
-    while i < len(input[1:]):
-        elem = 0
-        num = input[i]
-        differenza = input[i + 1]
-        group = input[i + 2 : i + num + 2]
+    
+    while i < len(input_data):
+        num = input_data[i]
+        differenza = input_data[i + 1]
+        group = input_data[i + 2 : i + num + 2]
         group.sort()
-        possibili_comb = []
-
-        for indice, elem in enumerate(group):
+        
+        ranges = []
+        for indice in range(len(group)):
             conta = 0
             while (indice + conta) < len(group) and group[indice + conta] <= (group[indice] + differenza):
                 conta += 1
-            possibili_comb.append((conta, indice + conta - 1))
-
-        n = len(possibili_comb)
-        miglior_da = [0] * n
-        miglior_da[n - 1] = possibili_comb[n - 1][0]
+            ranges.append((conta, indice + conta - 1))
+        
+        n = len(ranges)
+        best_from = [0] * n
+        best_from[n - 1] = ranges[n - 1][0]
+        
         for k in range(n - 2, -1, -1):
-            miglior_da[k] = max(possibili_comb[k][0], miglior_da[k + 1])
-
-        migliore_risposta = 0
-        for lunghezza, fine in possibili_comb:
-            if fine + 1 < len(group):
-                candidato = lunghezza + miglior_da[fine + 1]
+            best_from[k] = max(ranges[k][0], best_from[k + 1])
+        
+        best_answer = 0
+        for length, end_idx in ranges:
+            if end_idx + 1 < len(group):
+                candidate = length + best_from[end_idx + 1]
             else:
-                candidato = lunghezza
-            migliore_risposta = max(migliore_risposta, candidato)
-        results.append(migliore_risposta)
-
+                candidate = length
+            best_answer = max(best_answer, candidate)
+        
+        results.append(best_answer)
         i += num + 2
-
+    
     return results
 
 
