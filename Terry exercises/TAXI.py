@@ -1,3 +1,7 @@
+# Nell'esercizio è richiesto stabilire quanti taxi sono necessari per ogni caso in input,
+# in cui ci saranno delle sequenze di numeri che rappresentano ognuno una persona appartenente al gruppo del suo numero.
+# Ogni gruppo in un caso vuole il suo taxi
+
 import sys
 
 def main():
