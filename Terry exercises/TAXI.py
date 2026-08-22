@@ -1,14 +1,13 @@
 import sys
-from collections import Counter
 
 def main():
     taxi = []
-    casi_test = tuple(map(int, sys.stdin.read().split()))
+    casi_test = list(map(int, sys.stdin.read().split()))
     conta_persone = 0
     num_persone = -1
     for indice, caso in enumerate(casi_test[1:]):
         if conta_persone == num_persone:
-            taxi.append(len(Counter(casi_test[indice - num_persone + 2: indice + 2])))
+            taxi.append(len(set(casi_test[indice - num_persone + 2: indice + 2])))
             conta_persone = 0
         elif conta_persone == 0:
             num_persone = caso
