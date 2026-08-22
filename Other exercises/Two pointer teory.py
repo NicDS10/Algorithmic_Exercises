@@ -6,21 +6,18 @@
 def somma_11():
     nums = [8, 2, 1, 7, 6, 5, 8, 9, 12]
     nums.sort()
-    grow = nums[0]
-    g = 0
-    fall = nums[-1]
-    f = 1
-    for _ in nums:
-        if grow + fall == 11:
+    grow = 0
+    fall = len(nums) - 1
+    
+    while grow <= fall:
+        if nums[grow] + nums[fall] == 11:
             return True
-        elif grow + fall > 11:
-            f += 1
-            fall = nums[-f]
-        elif grow + fall < 11:
-            g += 1
-            grow = nums[g]
+        elif nums[grow] + nums[fall] > 11:
+            fall -= 1
         else:
-            return False
+            grow += 1
+    
+    return False
 
 if __name__ == '__main__':
     print(somma_11())
