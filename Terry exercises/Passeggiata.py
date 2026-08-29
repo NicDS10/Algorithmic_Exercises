@@ -35,6 +35,9 @@ def main():
         i += tratti * 2 + 1
     return prezzi
 
+# Sarebbe stato meglio calcolare il minimo dei prezzi e ogni volta usare quello
+# scorrendoli ma in questo modo è equivalente dato che vado a registrare i minimi
+# e usare quelli finché non ne trovo un altro
 
 if __name__ == '__main__':
     caso = 0
