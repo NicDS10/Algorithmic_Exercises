@@ -8,55 +8,58 @@
 
 import sys
 
-sys.stdin = open('Terry_tests.py', 'r')
+sys.stdin = open("Terry_tests.py", 'r')
+
+def solve(N, P):
+  INF = float('inf')
+  dp = [INF] * (N + 2)
+  dp[0] = 0
+
+  for m in range(N):
+    if dp[m] == INF:
+      continue
+    low_j = m if m == 0 else m + 1
+
+    for j in range(low_j, N + 1):
+      last = min(j, N - 1)
+      size = last - m + 1
+      tax = size * (j - m) - size * (size - 1) // 2
+      cost = dp[m] + tax
+      if j + 1 < N:
+        cost += P[j + 1]
+      target = j + 1
+      if cost < dp[target]:
+        dp[target] = cost
+
+  return min(dp[N], dp[N + 1])
+
 
 def main():
-    data_momentanea = map(int, sys.stdin.read().split())
+  data_momentanea = map(int, sys.stdin.read().split())
+  try:
     n_casi = next(data_momentanea)
-    data = list(data_momentanea)
-    i = 0
-    minimo = []
-    # si può osservare che il furgone deve partire sempre alla fine, ma è necessario decidere quando prima
-    while i < len(data):
-        n_penali = data[i]
-        penali = data[i + 1: i + n_penali + 1]
-        furgone = "resta"
-        pen_tempo = 0
-        pen_momentanea = 0
-        pen_sole = 0
-        pacchi_attendenti = 0
+  except StopIteration:
+    return []
 
-        # calcoliamo gli indici in cui far partire il furgone e le spese; una strategia potrebbe essere
-        # che se la penale dopo è di 1 lo faccio partire,  così non si accumulano troppo le penali di attesa (pen_temp)
+  data = list(data_momentanea)
+  i = 0
+  minimo = []
 
-        # buona per piccoli casi specifici, ma non corretta perché bisogna tenere conto anche dei casi futuri
-        # per determinare se partire o no
-        for ind, penale in enumerate(penali):
-            if furgone == "resta":
-                if ind != n_penali - 2 and (ind == n_penali - 1 or penali[ind + 1] <= pacchi_attendenti + 1):
-                    furgone = "in viaggio"
-                    pen_tempo += pen_momentanea
-                    pacchi_attendenti = 0
-                    pen_momentanea = 0
-                else:
-                    pacchi_attendenti += 1
-                    pen_momentanea += pacchi_attendenti
-            else:
-                pen_sole += penali[ind]
-                pacchi_attendenti += 1
-                pen_momentanea += pacchi_attendenti
-                furgone = "resta"
+  while i < len(data):
+    n_penali = data[i]
+    penali = data[i + 1 : i + 1 + n_penali]
 
-        minimo.append(pen_tempo + pen_sole)
+    # Invocazione della funzione DP
+    risultato = solve(n_penali, penali)
+    minimo.append(risultato)
 
-        i += n_penali + 1
+    i += n_penali + 1
 
-    return minimo
+  return minimo
 
-# per provare veramente, dovrei tentare con le disposizioni con ripetizione tutti i casi possibili tenendo conto
-# dei vincoli, e tenere il risultato minore ottenuto. Questa è la DP: Programmazione Dinamica
+# Questo esempio risulta O(N²) ma lo tengo perché è stato un buon allenamento
 
 if __name__ == '__main__':
-    tasse = main()
-    for case, tassa in enumerate(tasse):
-        print(f"Case #{case + 1}: {tassa}")
+  tasse = main()
+  for case, tassa in enumerate(tasse):
+    print(f"Case #{case + 1}: {tassa}")
