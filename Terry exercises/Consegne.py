@@ -8,8 +8,6 @@
 
 import sys
 
-sys.stdin = open("Terry_tests.py", 'r')
-
 def solve(N, P):
   INF = float('inf')
   dp = [INF] * (N + 2)
