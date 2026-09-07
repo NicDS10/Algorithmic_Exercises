@@ -23,7 +23,7 @@ print(fib_lento(20), "\n")
 time.sleep(1)
 print(fib_lento(40), "\n")
 time.sleep(1)
-print("------------------------")
+print("------------------------", "\n")
 
 # Fibonacci con Memoization
 
@@ -49,7 +49,7 @@ print(fib_memo(40), "\n")
 time.sleep(1)
 print(fib_memo(80), "\n")
 time.sleep(1)
-print("------------------------")
+print("------------------------", "\n")
 
 # Fibonacci con Bottom-Up
 def fib_bu(n):
@@ -85,4 +85,16 @@ sys.setrecursionlimit(1000000)
 sys.set_int_max_str_digits(100000)
 
 print(fib_bu(100000), "\n")
-print("Questo è il potere della dp!")
+print("Questo è il potere della dp!", "\n")
+print("------------------------", "\n")
+
+# Per avere una fib_memo senza costruire a mano l'algoritmo, possiamo usare @cache, che salva in automatico i risultati
+from functools import cache
+
+@cache
+def fib_memo_cache(n):
+    if n == 1 or n == 2:
+        return 1
+    return fib_memo_cache(n - 1) + fib_memo_cache(n - 2)
+
+print(fib_memo_cache(1000))
